@@ -24,24 +24,35 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile/index">
-            <el-dropdown-item>Profile</el-dropdown-item>
-          </router-link>
-          <router-link to="/">
-            <el-dropdown-item>Dashboard</el-dropdown-item>
-          </router-link>
-          <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
-          <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
+          <el-dropdown-item @click.native="changePwd">
+            <span style="display:block;">修改密码</span>
+          </el-dropdown-item>
+          <el-dropdown-item :divided="true" @click.native="logout">
+            <span style="display:block;">退出</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
+
+    <!-- 修改密码 弹窗 -->
+    <el-dialog title="修改密码" :visible.sync="dialogFormVisible">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="temp.username" />
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model="temp.password" show-password />
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">
+          取消
+        </el-button>
+        <el-button type="primary" @click="handleChangePwd()">
+          确认
+        </el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -53,6 +64,7 @@ import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
+import { exportChangePwd } from '@/api/user'
 
 export default {
   components: {
@@ -62,6 +74,19 @@ export default {
     Screenfull,
     SizeSelect,
     Search
+  },
+  data() {
+    return {
+      dialogFormVisible: false,
+      temp: {
+        username: this.$store.getters.name,
+        password: undefined
+      },
+      rules: {
+        password: [{ required: true, message: 'password is required', trigger: 'blur' }]
+      }
+
+    }
   },
   computed: {
     ...mapGetters([
@@ -77,6 +102,26 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    changePwd() {
+      this.dialogFormVisible = true
+      // console.log("修改密码")
+    },
+    handleChangePwd() {
+      this.$refs['dataForm'].validate((valid) => {
+        if (valid) {
+          exportChangePwd(this.temp).then(() => {
+            this.dialogFormVisible = false
+            this.$notify({
+              title: 'Success',
+              message: '修改密码成功',
+              type: 'success',
+              duration: 2000
+            })
+          })
+        }
+      })
+      // console.log("点击修改密码")
     }
   }
 }
