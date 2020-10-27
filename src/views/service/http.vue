@@ -34,12 +34,6 @@
                 :active-value="1"
                 :inactive-value="0"
               />
-              <span style="color:#606266;font-weight: 700;">&nbsp;&nbsp;&nbsp;支持websocket&nbsp;&nbsp;</span>
-              <el-switch
-                v-model="form.need_websocket"
-                :active-value="1"
-                :inactive-value="0"
-              />
             </el-form-item>
             <el-form-item label="URL重写">
               <el-input v-model="form.url_rewrite" type="textarea" autosize placeholder="格式：^/gateway/test_service(.*) $1 多条换行" />
