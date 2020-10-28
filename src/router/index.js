@@ -88,7 +88,7 @@ export const constantRoutes = [
         path: 'list',
         component: () => import('@/views/service/list'),
         name: '服务列表',
-        meta: { title: '服务列表', icon: 'component', affix: true }
+        meta: { title: '服务列表', icon: 'component', affix: false }
       },
       {
         path: 'service_create_http',
@@ -150,19 +150,12 @@ export const constantRoutes = [
     redirect: '/app/app_list',
     component: Layout,
     name: '租户管理',
-    meta: {
-      title: '租户管理',
-      icon: 'user'
-    },
+    meta: { title: '租户管理', icon: 'peoples' },
     children: [{
       path: 'app_list',
       component: () => import('@/views/app/app_list'),
       name: '租户列表',
-      meta: {
-        title: '租户列表',
-        icon: 'user',
-        affix: false
-      }
+      meta: { title: '租户列表', icon: 'peoples', affix: false }
     },
     {
       path: 'app_create',
