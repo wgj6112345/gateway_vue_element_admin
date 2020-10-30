@@ -31,18 +31,18 @@
       fit
       style="width: 100%;"
     >
-      <el-table-column label="ID" prop="id" align="center" width="80">
+      <el-table-column label="ID" prop="id" align="center" width="70">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="服务名称" min-width="165px">
+      <el-table-column label="服务名称" min-width="110px">
         <template slot-scope="{row}">
           <span>{{ row.service_name }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="服务描述" min-width="150px">
+      <el-table-column label="服务描述" min-width="130px">
         <template slot-scope="{row}">
           <span>{{ row.service_desc }}</span>
         </template>
@@ -52,12 +52,12 @@
           <span>{{ row.load_type | typeFilter }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="服务地址" min-width="300px">
+      <el-table-column label="服务地址" min-width="270px">
         <template slot-scope="{row}">
           <span>{{ row.service_addr }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="QPS限制" min-width="90px">
+      <el-table-column label="QPS" min-width="70px">
         <template slot-scope="{row}">
           <span>{{ row.qps }}</span>
         </template>
